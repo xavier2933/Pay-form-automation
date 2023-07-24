@@ -17,7 +17,10 @@ class readData:
     # Set initial params for data that is not easily read from csv file
     def __init__(self, inFile):
         self.days = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"]
-        self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        service = Service(executable_path='./chromedriver.exe')
+        options = webdriver.ChromeOptions()
+        self.browser = webdriver.Chrome(service=service, options=options)
+        #webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.totalHoursWorkedWeek1 = 0
         self.totalHoursWorkedWeek2 = 0
         self.bigTotalWorked = 0
