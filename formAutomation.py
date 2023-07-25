@@ -6,7 +6,6 @@
 #################################################################
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 import time
@@ -17,15 +16,16 @@ class readData:
     # Set initial params for data that is not easily read from csv file
     def __init__(self, inFile):
         self.days = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"]
-        service = Service(executable_path='./chromedriver.exe')
+        service = Service(executable_path='./chromedriver.exe') ## updated for selenium 4.10.0
         options = webdriver.ChromeOptions()
         self.browser = webdriver.Chrome(service=service, options=options)
-        #webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.totalHoursWorkedWeek1 = 0
         self.totalHoursWorkedWeek2 = 0
         self.bigTotalWorked = 0
 ##################################################################################################
 #                        STUFF YOU NEED TO CHANGE
+# - I used a secret file, replace that whole variable with your info in string form
+# - Find your info in the .html doc, make sure the variable is the exact same
 ##################################################################################################
         self.docToRead = inFile
         self.name = "Xavier O'Keefe"
@@ -59,7 +59,7 @@ class readData:
         with open(self.docToRead) as csvFile:
             csvReader = csv.reader(csvFile, delimiter=',')
             for row in csvReader:
-                if(i < 7):
+                if(i < 7): # Hardcode for first week
                     (date, inner, out, total) = row
                     date1 = self.browser.find_element(By.NAME, "Date_" + self.days[i] + "_Week1")
                     date1.send_keys(str(date))
@@ -68,7 +68,7 @@ class readData:
                     out1 = self.browser.find_element(By.NAME, "Out_" + self.days[i] + "_Week1")
                     out1.send_keys(str(out))
                     total1 = self.browser.find_element(By.NAME, "Total_Hours_" + self.days[i] + "_Week1")
-                    self.totalHoursWorkedWeek1 += float(total)
+                    self.totalHoursWorkedWeek1 += float(total) # store data for total hours
                     total1.send_keys(str(total))
                     i += 1
                 else:
@@ -85,7 +85,7 @@ class readData:
                     j +=1     
 
         hours1 = self.browser.find_element(By.NAME, "Total_Hours_Week1")
-        hours1.send_keys(str(self.totalHoursWorkedWeek1))  
+        hours1.send_keys(str(self.totalHoursWorkedWeek1))
         hours2 = self.browser.find_element(By.NAME, "Total_Hours_Week2")
         hours2.send_keys(str(self.totalHoursWorkedWeek2)) 
         bigTotal = self.browser.find_element(By.NAME, "Total_Hours_for_Pay_Period")
