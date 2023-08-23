@@ -8,7 +8,7 @@ information. You can either copy these exactly from the form or from the .html f
 - Totals will be automatically calculated, make sure these are correct before submitting
  - You will
 (probably) need to install selenium, which can be done with 
-`pip install selenium ` or whatever the equivalent for mac is. 
+`pip install selenium `. ONLY WORKS FOR SELENIUM >= 4.10 
 - When you run the program you will be redirected to the university's sso page, you will have ~10 seconds to fill this out, and after
 that all you need to do is watch, check that everything is correct, and press submit. The window will automatically close WITHOUT SUBMITTING after 100 seconds
 
