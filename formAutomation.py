@@ -8,6 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 import time
 import csv
 import secretFile
@@ -36,7 +38,15 @@ class readData:
     # Load the browser
     def getBrowser(self):
         self.browser.get(self.url)
-        time.sleep(15)
+        wait = WebDriverWait(self.browser, 100) # 100 secs to wait
+        try:
+            # Wait until user logs in
+            wait.until(EC.element_to_be_clickable((By.NAME, 'realname'))) 
+        finally: 
+            # Quit if no login/invalid login
+            self.browser.quit()
+            print("Timed out! Try again")
+            exit()
 
     # Function to read the CSV file and add data into the form
     def addData(self):
@@ -52,6 +62,7 @@ class readData:
         endDate = self.browser.find_element(By.NAME, "Pay_Period_End_Date")
         endDate.send_keys(str(self.endDate))
 
+        # Weird iteration because of form structure
         i = 0
         j = 0
         with open(self.docToRead) as csvFile:
