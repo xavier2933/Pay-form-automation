@@ -9,6 +9,6 @@ information. You can either copy these exactly from the form or from the .html f
  - You will
 (probably) need to install selenium, which can be done with 
 `pip install selenium `. ONLY WORKS FOR SELENIUM >= 4.10 
-- When you run the program you will be redirected to the university's sso page, you will have ~10 seconds to fill this out, and after
+- When you run the program you will be redirected to the university's sso page, you will have 100 seconds to fill this out, and after
 that all you need to do is watch, check that everything is correct, and press submit. The window will automatically close WITHOUT SUBMITTING after 100 seconds
 
