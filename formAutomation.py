@@ -41,7 +41,8 @@ class readData:
         wait = WebDriverWait(self.browser, 100) # 100 secs to wait
         try:
             # Wait until user logs in
-            wait.until(EC.element_to_be_clickable((By.NAME, 'realname'))) 
+            wait.until(EC.element_to_be_clickable((By.NAME, 'realname')))
+            self.addData() 
         finally: 
             # Quit if no login/invalid login
             self.browser.quit()
@@ -50,7 +51,6 @@ class readData:
 
     # Function to read the CSV file and add data into the form
     def addData(self):
-        self.getBrowser()
         name = Select(self.browser.find_element(By.NAME, "realname"))
         name.select_by_visible_text(self.name)
         email = self.browser.find_element(By.NAME, "email")
@@ -110,6 +110,6 @@ if __name__ == "__main__":
     print()
     file = input("Which file??  >> ")
     read = readData(file)
-    read.addData()
+    read.getBrowser()
     read.quitBrowser()
 
