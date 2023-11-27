@@ -33,7 +33,6 @@ class readData:
         self.sup_Name = secretFile.superName
         self.sup_Email = secretFile.superEmail
         self.url = secretFile.link
-        self.endDate = "6/3"
 
     # Load the browser
     def getBrowser(self):
@@ -59,8 +58,6 @@ class readData:
         supName.select_by_visible_text(self.sup_Name)
         supEmail = Select(self.browser.find_element(By.NAME, "recipient"))
         supEmail.select_by_visible_text(self.sup_Email)
-        endDate = self.browser.find_element(By.NAME, "Pay_Period_End_Date")
-        endDate.send_keys(str(self.endDate))
 
         # Weird iteration because of form structure
         i = 0
@@ -91,6 +88,8 @@ class readData:
                     total2 = self.browser.find_element(By.NAME, "Total_Hours_" + self.days[j] + "_Week2")
                     self.totalHoursWorkedWeek2 += float(total)
                     total2.send_keys(str(total))
+                    if j == 6:
+                        endDateVal = date
                     j +=1     
 
         hours1 = self.browser.find_element(By.NAME, "Total_Hours_Week1")
@@ -100,6 +99,8 @@ class readData:
         bigTotal = self.browser.find_element(By.NAME, "Total_Hours_for_Pay_Period")
         self.bigTotalWorked = self.totalHoursWorkedWeek1 + self.totalHoursWorkedWeek2
         bigTotal.send_keys(str(self.bigTotalWorked))  
+        endDate = self.browser.find_element(By.NAME, "Pay_Period_End_Date")
+        endDate.send_keys(str(endDateVal))
         time.sleep(100)
 
     # Quits the browser
