@@ -88,7 +88,7 @@ class readData:
                     total2 = self.browser.find_element(By.NAME, "Total_Hours_" + self.days[j] + "_Week2")
                     self.totalHoursWorkedWeek2 += float(total)
                     total2.send_keys(str(total))
-                    if j == 6:
+                    if j == 6: # last day of pay period
                         endDateVal = date
                     j +=1     
 
