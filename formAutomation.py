@@ -10,9 +10,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import time
+import time 
 import csv
 import secretFile
+import logging
 
 class readData:
     # Set initial params for data that is not easily read from csv file
@@ -22,13 +23,16 @@ class readData:
         self.totalHoursWorkedWeek1 = 0
         self.totalHoursWorkedWeek2 = 0
         self.bigTotalWorked = 0
+        self.logger = logging.getLogger('selenium')
+        self.logger = self.logger.setLevel(logging.DEBUG)
+
 ##################################################################################################
 #                        STUFF YOU NEED TO CHANGE
 # - I used a secret file, replace that whole variable with your info in string form
 # - Find your info in the .html doc, make sure the variable is the exact same
 ##################################################################################################
         self.docToRead = inFile
-        self.name = "Xavier O'Keefe"
+        self.name = "Xavier O'keefe"
         self.email = "xaok7569@colorado.edu"
         self.sup_Name = secretFile.superName
         self.sup_Email = secretFile.superEmail
@@ -42,6 +46,9 @@ class readData:
             # Wait until user logs in
             wait.until(EC.element_to_be_clickable((By.NAME, 'realname')))
             self.addData() 
+            wait2 = WebDriverWait(self.browser, 10)
+        except Exception as e:
+            print(e)
         finally: 
             # Quit if no login/invalid login
             self.browser.quit()
