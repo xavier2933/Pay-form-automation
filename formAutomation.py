@@ -12,6 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time 
 import csv
+import os
 import secretFile
 import logging
 
@@ -25,13 +26,14 @@ class readData:
         self.bigTotalWorked = 0
         self.logger = logging.getLogger('selenium')
         self.logger = self.logger.setLevel(logging.DEBUG)
+        self.docToRead = inFile
+
 
 ##################################################################################################
 #                        STUFF YOU NEED TO CHANGE
 # - I used a secret file, replace that whole variable with your info in string form
 # - Find your info in the .html doc, make sure the variable is the exact same
 ##################################################################################################
-        self.docToRead = inFile
         self.name = "Xavier O'keefe"
         self.email = "xaok7569@colorado.edu"
         self.sup_Name = secretFile.superName
@@ -117,7 +119,12 @@ class readData:
 if __name__ == "__main__":
     print()
     file = input("Which file??  >> ")
+    if not os.path.isfile(file):
+        print(f"File {file} not found in current direcory")
+        exit()
+
     read = readData(file)
+
     read.getBrowser()
     read.quitBrowser()
 
